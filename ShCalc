@@ -1,0 +1,158 @@
+Option Explicit
+
+Private Sub Worksheet_Activate()
+    
+    Dim answer As VbMsgBoxResult
+    answer = MsgBox("Would you like the calculation to run?", vbYesNo + vbQuestion)
+    
+    If answer = vbYes Then
+        Call Calc
+        ShResult.Activate
+    End If
+    
+End Sub
+
+Public Sub Calc()
+
+    Application.ScreenUpdating = False
+
+    Dim lastrow As Long
+    lastrow = ShMain.Range("A" & Rows.Count).End(xlUp).Row
+    
+    ShResult.Range("A:W").Delete
+    ShBelowSafety.Range("A:W").Delete
+    
+    Dim i As Long
+
+    For i = 1 To lastrow Step 1
+        
+        Dim RangeToCheck As Range
+        Set RangeToCheck = ShMain.Range("G" & i)
+        
+        If RangeToCheck.Value < 0 And RangeToCheck.Offset(0, -6) < Date + RangeToCheck.End(xlUp).End(xlUp).Offset(0, 9) Then
+
+            With ShResult
+                .Range("A1").Value = "Item"
+                .Range("B1").Value = "Qt"
+                .Range("C1").Value = "LT"
+                .Range("D1").Value = "Vendor"
+                .Range("E1").Value = "Date"
+                .Range("F1").Value = "Safety"
+                .Range("G1").Value = "MOQ"
+                .Range("H1").Value = "Desc"
+                .Range("I1").Value = "Buyer"
+                .Range("J1").Value = "Sub"
+                .Range("K1").Value = "Vendor Desc."
+                
+                Dim ShResultLastrow As Long
+                ShResultLastrow = ShResult.UsedRange.Rows.Count
+                
+                If RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Value = "Item number" Then
+                    .Range("A" & ShResultLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 1)
+                Else
+                    .Range("A" & ShResultLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlDown).End(xlDown).Offset(0, 1).Value
+                End If
+
+'                .Range("A" & ShResultLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 1)
+                .Range("B" & ShResultLastrow + 1).Value = RangeToCheck.Value
+                .Range("C" & ShResultLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 9)
+                .Range("D" & ShResultLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 7)
+                .Range("E" & ShResultLastrow + 1).Value = RangeToCheck.Offset(0, -6)
+                .Range("F" & ShResultLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 17)
+                .Range("G" & ShResultLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 23)
+                .Range("H" & ShResultLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 2)
+            End With
+            
+        End If
+        
+        If RangeToCheck.Value < RangeToCheck.End(xlUp).End(xlUp).Offset(0, 17) And RangeToCheck.Offset(0, -6) < Date + RangeToCheck.End(xlUp).End(xlUp).Offset(0, 9) Then
+            
+            With ShBelowSafety
+                .Range("A1").Value = "Item"
+                .Range("B1").Value = "Qt"
+                .Range("C1").Value = "LT"
+                .Range("D1").Value = "Vendor"
+                .Range("E1").Value = "Date"
+                .Range("F1").Value = "Safety"
+                .Range("G1").Value = "MOQ"
+                .Range("H1").Value = "Desc"
+                .Range("I1").Value = "Buyer"
+                .Range("J1").Value = "Sub"
+                .Range("K1").Value = "Vendor Desc."
+            
+                Dim ShBelowSafetyLastrow As Long
+                ShBelowSafetyLastrow = ShBelowSafety.UsedRange.Rows.Count
+                
+                 If RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Value = "Item number" Then
+                    .Range("A" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 1)
+                 Else
+                    .Range("A" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlDown).End(xlDown).Offset(0, 1).Value
+                 End If
+
+'                .Range("A" & ShResultLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 1)
+                .Range("B" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.Value
+                .Range("C" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 9)
+                .Range("D" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 7)
+                .Range("E" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.Offset(0, -6)
+                .Range("F" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 17)
+                .Range("G" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlUp).End(xlUp).Offset(0, 23)
+                .Range("H" & ShBelowSafetyLastrow + 1).Value = RangeToCheck.End(xlToLeft).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).End(xlUp).Offset(0, 2)
+            End With
+        
+        End If
+    Next i
+    
+             With ShResult
+                .Range("E:E").NumberFormat = "m/d/yyyy"
+                .Range("I2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$A$1:$A$434)"
+                .Range("I2", "I" & ShResult.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+                .Range("J2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$B$1:$B$434)"
+                .Range("J2", "J" & ShResult.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+                .Range("K2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$D$1:$D$434)"
+                .Range("K2", "K" & ShResult.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+                Dim AddZeroes As Range, cell As Range
+                Set AddZeroes = .Range("A2", "A" & ShResultLastrow)
+            
+                For Each cell In AddZeroes
+                    If Len(cell.Value) = 8 Then
+                        cell.Value = "'0" & cell.Value
+                    End If
+                Next cell
+                
+                .UsedRange.Columns.AutoFit
+            
+            End With
+    
+    With ShBelowSafety
+    
+            .Range("E:E").NumberFormat = "m/d/yyyy"
+            .Range("I2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$A$1:$A$434)"
+            .Range("I2", "I" & ShBelowSafety.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+            .Range("J2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$B$1:$B$434)"
+            .Range("J2", "J" & ShBelowSafety.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+            .Range("K2").Value = "=XLOOKUP(D2,LogShen!$C$1:$C$434,LogShen!$D$1:$D$434)"
+            .Range("K2", "K" & ShBelowSafety.Range("A" & Rows.Count).End(xlUp).Row).FillDown
+                
+            'Dim AddZeroes As Range, cell As Range
+            Set AddZeroes = ShBelowSafety.Range("A2", "A" & ShBelowSafetyLastrow)
+            
+            For Each cell In AddZeroes
+                If Len(cell.Value) = 8 Then
+                    cell.Value = "'0" & cell.Value
+                End If
+            Next cell
+                
+            .UsedRange.Columns.AutoFit
+    End With
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
+
