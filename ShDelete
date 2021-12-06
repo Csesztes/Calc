@@ -1,0 +1,14 @@
+Option Explicit
+
+Private Sub Worksheet_Activate()
+    
+    Dim answer As VbMsgBoxResult
+    answer = MsgBox("Would you like to clear DailyNetReq?", vbYesNo + vbQuestion)
+    
+    If answer = vbYes Then
+        ShMain.Activate
+        ShMain.Cells.Delete Shift:=xlUp
+        ShMain.Cells.NumberFormat = "@"
+        
+    End If
+End Sub
